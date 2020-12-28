@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Request.Margin;
 using Huobi.SDK.Model.Response.Margin;
@@ -9,7 +10,7 @@ namespace Huobi.SDK.Core.Client
     /// <summary>
     /// Responsible to operate cross margin
     /// </summary>
-    public class CrossMarginClient
+    public class CrossMarginClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -24,7 +25,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public CrossMarginClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public CrossMarginClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -41,7 +42,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"currency\":\"{currency}\", \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"currency\":\"{currency}\", \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/cross-margin/loan-info");
 
-            return await HttpRequest.GetAsync<GetCrossLoanInfoResponse>(url);
+            return await _httpRequestClient.GetAsync<GetCrossLoanInfoResponse>(url);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"currency\":\"{currency}\", \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/cross-margin/loan-orders", request);
 
-            return await HttpRequest.GetAsync<GetCrossLoanOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetCrossLoanOrdersResponse>(url);
         }
 
         /// <summary>
@@ -121,7 +122,7 @@ namespace Huobi.SDK.Core.Client
                 .AddParam("sub-uid", subUserId);
             string url = _urlBuilder.Build(GET_METHOD, "/v1/cross-margin/accounts/balance", request);
 
-            return await HttpRequest.GetAsync<GetCrossMarginAccountResponse>(url);
+            return await _httpRequestClient.GetAsync<GetCrossMarginAccountResponse>(url);
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v2/account/repayment");
 
-            return await HttpRequest.PostAsync<GeneralRepayResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<GeneralRepayResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, "/v2/account/repayment", getRequest);
 
-            return await HttpRequest.GetAsync<GetRepaymentResponse>(url);
+            return await _httpRequestClient.GetAsync<GetRepaymentResponse>(url);
         }
     }
 }

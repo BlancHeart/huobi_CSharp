@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Huobi.SDK.Core.Log;
@@ -9,25 +10,31 @@ namespace Huobi.SDK.Core
     /// <summary>
     /// The staic class that wrap the GET and POST Http request
     /// </summary>
-    public class HttpRequest
+    public class HttpRequestClient
     {
         //public static bool LogPerformanceEnabled = false;
 
         public static PerformanceLogger _logger = PerformanceLogger.GetInstance();
+        public HttpClient _httpClient;
 
+        public HttpRequestClient(HttpClient httpClient = null)
+        {
+            _httpClient = httpClient ?? new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(20)
+            };
+        }
         /// <summary>
         /// Send Http GET request
         /// </summary>
         /// <typeparam name="T">The response type</typeparam>
         /// <param name="url">Request url</param>
         /// <returns>The generic response type</returns>
-        public static async Task<T> GetAsync<T>(string url)
-        {            
-            var httpClient = new HttpClient();
-
+        public async Task<T> GetAsync<T>(string url)
+        {
             _logger.RquestStart("GET", url);
 
-            string response = await httpClient.GetStringAsync(url);
+            string response = await _httpClient.GetStringAsync(url);
 
             _logger.RequestEnd();
 
@@ -42,13 +49,11 @@ namespace Huobi.SDK.Core
         /// <typeparam name="T">The response type</typeparam>
         /// <param name="url">Request url</param>
         /// <returns>The generic response type</returns>
-        public static async Task<string> GetStringAsync(string url)
+        public async Task<string> GetStringAsync(string url)
         {
-            var httpClient = new HttpClient();
-
             _logger.RquestStart("GET", url);
 
-            string response = await httpClient.GetStringAsync(url);
+            string response = await _httpClient.GetStringAsync(url);
 
             _logger.RequestEnd();
 
@@ -63,7 +68,7 @@ namespace Huobi.SDK.Core
         /// <param name="body">Request body</param>
         /// <param name="mediaTyp">Meida type, default value is "application/json"</param>
         /// <returns>The response type</returns>
-        public static async Task<T> PostAsync<T>(string url, string body = null, string mediaTyp = "application/json")
+        public async Task<T> PostAsync<T>(string url, string body = null, string mediaTyp = "application/json")
         {
             StringContent httpContent;
 
@@ -76,11 +81,9 @@ namespace Huobi.SDK.Core
                 httpContent = new StringContent(body, Encoding.UTF8, mediaTyp);
             }
 
-            var httpClient = new HttpClient();
-
             _logger.RquestStart("POST", url);
 
-            var response = await httpClient.PostAsync(url, httpContent);
+            var response = await _httpClient.PostAsync(url, httpContent);
 
             string result = await response.Content.ReadAsStringAsync();
 

@@ -4,13 +4,14 @@ using Huobi.SDK.Model.Response.Order;
 using Huobi.SDK.Model.Request.Order;
 using Newtonsoft.Json;
 using System;
+using System.Net.Http;
 
 namespace Huobi.SDK.Core.Client
 {
     /// <summary>
     /// Responsible to operate on order
     /// </summary>
-    public class OrderClient
+    public class OrderClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -25,7 +26,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public OrderClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public OrderClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -39,7 +40,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/order/orders/place");
 
-            return await HttpRequest.PostAsync<PlaceOrderResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<PlaceOrderResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/order/batch-orders");
 
-            return await HttpRequest.PostAsync<PlaceOrdersResponse>(url, JsonConvert.SerializeObject(requests));
+            return await _httpRequestClient.PostAsync<PlaceOrdersResponse>(url, JsonConvert.SerializeObject(requests));
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v1/order/orders/{orderId}/submitcancel");            
 
-            return await HttpRequest.PostAsync<CancelOrderByIdResponse>(url);
+            return await _httpRequestClient.PostAsync<CancelOrderByIdResponse>(url);
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"client-order-id\":\"{clientOrderId}\" }}";
 
-            return await HttpRequest.PostAsync<CancelOrderByClientResponse>(url, body);
+            return await _httpRequestClient.PostAsync<CancelOrderByClientResponse>(url, body);
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/order/openOrders", request);
 
-            return await HttpRequest.GetAsync<GetOpenOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetOpenOrdersResponse>(url);
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v1/order/orders/batchCancelOpenOrders");
 
-            return await HttpRequest.PostAsync<CancelOrdersByCriteriaResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CancelOrdersByCriteriaResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v1/order/orders/batchcancel");
 
-            return await HttpRequest.PostAsync<CancelOrdersByIdsResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CancelOrdersByIdsResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/order/orders/{orderId}");
 
-            return await HttpRequest.GetAsync<GetOrderResponse>(url);
+            return await _httpRequestClient.GetAsync<GetOrderResponse>(url);
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/order/orders/getClientOrder", request);
 
-            return await HttpRequest.GetAsync<GetOrderResponse>(url);
+            return await _httpRequestClient.GetAsync<GetOrderResponse>(url);
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/order/orders/{orderId}/matchresults");
 
-            return await HttpRequest.GetAsync<GetMatchResultsResponse>(url);
+            return await _httpRequestClient.GetAsync<GetMatchResultsResponse>(url);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/order/orders", request);
 
-            return await HttpRequest.GetAsync<GetHistoryOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetHistoryOrdersResponse>(url);
         }
 
         /// <summary>
@@ -174,7 +175,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/order/history", request);
 
-            return await HttpRequest.GetAsync<GetHistoryOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetHistoryOrdersResponse>(url);
         }
 
         /// <summary>
@@ -186,7 +187,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/order/matchresults", request);
 
-            return await HttpRequest.GetAsync<GetMatchResultsResponse>(url);
+            return await _httpRequestClient.GetAsync<GetMatchResultsResponse>(url);
         }
 
         /// <summary>
@@ -200,7 +201,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/fee/fee-rate/get", request);
 
-            return await HttpRequest.GetAsync<GetFeeResponse>(url);
+            return await _httpRequestClient.GetAsync<GetFeeResponse>(url);
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v2/reference/transact-fee-rate", request);
 
-            return await HttpRequest.GetAsync<GetTransactFeeRateResponse>(url);
+            return await _httpRequestClient.GetAsync<GetTransactFeeRateResponse>(url);
         }
     }
 }

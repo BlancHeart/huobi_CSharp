@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Request.Account;
 using Huobi.SDK.Model.Response.Account;
@@ -9,7 +10,7 @@ namespace Huobi.SDK.Core.Client
     /// <summary>
     /// Responsible to operate account
     /// </summary>
-    public class AccountClient
+    public class AccountClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -24,7 +25,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public AccountClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public AccountClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -37,7 +38,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/account/accounts");
 
-            return await HttpRequest.GetAsync<GetAccountInfoResponse>(url);
+            return await _httpRequestClient.GetAsync<GetAccountInfoResponse>(url);
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/account/accounts/{accountId}/balance");
 
-            return await HttpRequest.GetAsync<GetAccountBalanceResponse>(url);
+            return await _httpRequestClient.GetAsync<GetAccountBalanceResponse>(url);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, $"/v2/account/asset-valuation", request);
 
-            return await HttpRequest.GetAsync<GetAccountAssetValuationResponse>(url);
+            return await _httpRequestClient.GetAsync<GetAccountAssetValuationResponse>(url);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/account/transfer");
 
-            return await HttpRequest.PostAsync<TransferAccountResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<TransferAccountResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/account/history", request);
 
-            return await HttpRequest.GetAsync<GetAccountHistoryResponse>(url);
+            return await _httpRequestClient.GetAsync<GetAccountHistoryResponse>(url);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v2/account/ledger", request);
 
-            return await HttpRequest.GetAsync<GetAccountLedgerResponse>(url);
+            return await _httpRequestClient.GetAsync<GetAccountLedgerResponse>(url);
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace Huobi.SDK.Core.Client
 
             string content = $"{{ \"currency\": \"{currency}\", \"amount\":\"{amount}\", \"type\":\"{type}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, content);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, content);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, "/v2/point/account", request);
 
-            return await HttpRequest.GetAsync<GetPointBalanceResponse>(url);
+            return await _httpRequestClient.GetAsync<GetPointBalanceResponse>(url);
         }
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v2/point/transfer");
 
-            return await HttpRequest.PostAsync<TransferPointResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<TransferPointResponse>(url, request.ToJson());
         }
     }
 }

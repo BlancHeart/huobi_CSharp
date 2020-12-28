@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Request.SubUser;
 using Huobi.SDK.Model.Response.SubUser;
@@ -10,7 +11,7 @@ namespace Huobi.SDK.Core.Client
     /// <summary>
     /// Responsible to operate sub user
     /// </summary>
-    public class SubUserClient
+    public class SubUserClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -25,7 +26,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public SubUserClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public SubUserClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -39,7 +40,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v2/sub-user/creation");
 
-            return await HttpRequest.PostAsync<CreateSubUserResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CreateSubUserResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Huobi.SDK.Core.Client
 
             string content = $"{{ \"subUid\": \"{subUserId}\", \"action\":\"{action}\" }}";
 
-            return await HttpRequest.PostAsync<LockUnLockSubUserResponse>(url, content);
+            return await _httpRequestClient.PostAsync<LockUnLockSubUserResponse>(url, content);
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace Huobi.SDK.Core.Client
 
             string content = $"{{ \"sub-uid\": {subUserId}, \"currency\":\"{currency}\", \"amount\":{amount}, \"type\":\"{type}\" }}";
             
-            return await HttpRequest.PostAsync<TransferResponse>(url, content);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, content);
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, "/v2/sub-user/deposit-address", request);
 
-            return await HttpRequest.GetAsync<GetDepositAddressResponse>(url);
+            return await _httpRequestClient.GetAsync<GetDepositAddressResponse>(url);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v2/sub-user/query-deposit", request);
 
-            return await HttpRequest.GetAsync<GetSubUserDepositHistoryResponse>(url);
+            return await _httpRequestClient.GetAsync<GetSubUserDepositHistoryResponse>(url);
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/subuser/aggregate-balance");
 
-            return await HttpRequest.GetAsync<GetSubUserAccountBalancesResponse>(url);
+            return await _httpRequestClient.GetAsync<GetSubUserAccountBalancesResponse>(url);
         }
 
         /// <summary>
@@ -191,7 +192,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v1/account/accounts/{subUserId}");
 
-            return await HttpRequest.GetAsync<GetSubUserAccountBalanceResponse>(url);
+            return await _httpRequestClient.GetAsync<GetSubUserAccountBalanceResponse>(url);
         }
     }
 }

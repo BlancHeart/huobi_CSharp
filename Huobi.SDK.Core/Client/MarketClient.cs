@@ -2,13 +2,14 @@
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Order;
 using Huobi.SDK.Model.Response.Market;
+using System.Net.Http;
 
 namespace Huobi.SDK.Core.Client
 {
     /// <summary>
     /// Responsible to get market information
     /// </summary>
-    public class MarketClient
+    public class MarketClient : BaseClient
     {
         private const string DEFAULT_HOST = "api.huobi.pro";
 
@@ -18,7 +19,7 @@ namespace Huobi.SDK.Core.Client
         /// Constructor
         /// </summary>
         /// <param name="host">the host that the client connects to</param>
-        public MarketClient(string host = DEFAULT_HOST)
+        public MarketClient(HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PublicUrlBuilder(host);
         }
@@ -32,7 +33,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/market/history/kline", request);
 
-            return await HttpRequest.GetAsync<GetCandlestickResponse>(url);
+            return await _httpRequestClient.GetAsync<GetCandlestickResponse>(url);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build($"/market/detail/merged?symbol={symbol}");
 
-            return await HttpRequest.GetAsync<GetLast24hCandlestickAskBidResponse>(url);
+            return await _httpRequestClient.GetAsync<GetLast24hCandlestickAskBidResponse>(url);
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/market/tickers");
 
-            return await HttpRequest.GetAsync<GetAllSymbolsLast24hCandlesticksAskBidResponse>(url);
+            return await _httpRequestClient.GetAsync<GetAllSymbolsLast24hCandlesticksAskBidResponse>(url);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/market/depth", request);
 
-            return await HttpRequest.GetAsync<GetDepthResponse>(url);
+            return await _httpRequestClient.GetAsync<GetDepthResponse>(url);
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build($"/market/trade?symbol={symbol}");
 
-            return await HttpRequest.GetAsync<GetLastTradeResponse>(url);
+            return await _httpRequestClient.GetAsync<GetLastTradeResponse>(url);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build($"/market/history/trade?symbol={symbol}&size={size}");
 
-            return await HttpRequest.GetAsync<GetLastTradesResponse>(url);
+            return await _httpRequestClient.GetAsync<GetLastTradesResponse>(url);
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build($"/market/detail?symbol={symbol}");
 
-            return await HttpRequest.GetAsync<GetLast24hCandlestickResponse>(url);
+            return await _httpRequestClient.GetAsync<GetLast24hCandlestickResponse>(url);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Margin;
 using Huobi.SDK.Model.Response.Transfer;
@@ -8,7 +9,7 @@ namespace Huobi.SDK.Core.Client
     /// <summary>
     /// Responsible to operate isolated margin
     /// </summary>
-    public class IsolatedMarginClient
+    public class IsolatedMarginClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -23,7 +24,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public IsolatedMarginClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public IsolatedMarginClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -41,7 +42,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"symbol\":\"{symbol}\", \"currency\":\"{currency}\", \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"symbol\":\"{symbol}\", \"currency\":\"{currency}\", \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, "/v1/margin/loan-info", request);
 
-            return await HttpRequest.GetAsync<GetIsolatedLoanInfoResponse>(url);
+            return await _httpRequestClient.GetAsync<GetIsolatedLoanInfoResponse>(url);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"symbol\":\"{symbol}\", \"currency\":\"{currency}\", \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"amount\":\"{amount}\" }}";
 
-            return await HttpRequest.PostAsync<TransferResponse>(url, body);
+            return await _httpRequestClient.PostAsync<TransferResponse>(url, body);
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/margin/loan-orders", request);
 
-            return await HttpRequest.GetAsync<GetIsolatedLoanOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetIsolatedLoanOrdersResponse>(url);
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, "/v1/margin/accounts/balance", request);
 
-            return await HttpRequest.GetAsync<GetIsolatedMarginAccountResponse>(url);
+            return await _httpRequestClient.GetAsync<GetIsolatedMarginAccountResponse>(url);
         }
     }
 }

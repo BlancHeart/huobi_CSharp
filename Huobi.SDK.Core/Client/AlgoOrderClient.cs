@@ -2,13 +2,14 @@
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.AlgoOrder;
 using Huobi.SDK.Model.Request.AlgoOrder;
+using System.Net.Http;
 
 namespace Huobi.SDK.Core.Client
 {
     /// <summary>
     /// Responsible to operate on order
     /// </summary>
-    public class AlgoOrderClient
+    public class AlgoOrderClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -23,7 +24,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public AlgoOrderClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public AlgoOrderClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -37,7 +38,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v2/algo-orders");
 
-            return await HttpRequest.PostAsync<PlaceOrderResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<PlaceOrderResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v2/algo-orders/cancellation");
 
-            return await HttpRequest.PostAsync<CancelOrdersResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CancelOrdersResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -61,9 +62,9 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v2/algo-orders/opening", request);
 
-            return await HttpRequest.GetAsync<GetOpenOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetOpenOrdersResponse>(url);
         }
-        
+
         /// <summary>
         /// Returns algo orders that have been inactive
         /// </summary>
@@ -73,7 +74,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, $"/v2/algo-orders/history", request);
 
-            return await HttpRequest.GetAsync<GetHistoryOrdersResponse>(url);
+            return await _httpRequestClient.GetAsync<GetHistoryOrdersResponse>(url);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Huobi.SDK.Core.Client
 
             string url = _urlBuilder.Build(GET_METHOD, $"/v2/algo-orders/specific", request);
 
-            return await HttpRequest.GetAsync<GetSpecificOrderResponse>(url);
+            return await _httpRequestClient.GetAsync<GetSpecificOrderResponse>(url);
         }
 
 

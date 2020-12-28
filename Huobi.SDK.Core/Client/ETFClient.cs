@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.ETF;
 
@@ -7,7 +8,7 @@ namespace Huobi.SDK.Core.Client
     /// <summary>
     /// Responsible to operate ETF
     /// </summary>
-    public class ETFClient
+    public class ETFClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -24,7 +25,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public ETFClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public ETFClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -39,7 +40,7 @@ namespace Huobi.SDK.Core.Client
                 .AddParam("etf_name", ETF_NAME);
             string url = _urlBuilder.Build(GET_METHOD, "/etf/swap/config", request);
 
-            return await HttpRequest.GetAsync<GetETFInfoResponse>(url);
+            return await _httpRequestClient.GetAsync<GetETFInfoResponse>(url);
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"etf_name\":\"{ETF_NAME}\", \"amount\":{amount} }}";
 
-            return await HttpRequest.PostAsync<SwapETFResponse>(url, body);
+            return await _httpRequestClient.PostAsync<SwapETFResponse>(url, body);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Huobi.SDK.Core.Client
 
             string body = $"{{ \"etf_name\":\"{ETF_NAME}\", \"amount\":{amount} }}";
 
-            return await HttpRequest.PostAsync<SwapETFResponse>(url, body);
+            return await _httpRequestClient.PostAsync<SwapETFResponse>(url, body);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Huobi.SDK.Core.Client
                 .AddParam("limit", limit.ToString());
             string url = _urlBuilder.Build(GET_METHOD, "/etf/swap/list", request);
 
-            return await HttpRequest.GetAsync<GetETFSwapHistoryResponse>(url);
+            return await _httpRequestClient.GetAsync<GetETFSwapHistoryResponse>(url);
         }
     }
 }

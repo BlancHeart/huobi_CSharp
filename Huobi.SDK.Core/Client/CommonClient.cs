@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Common;
 
@@ -7,7 +8,7 @@ namespace Huobi.SDK.Core.Client
     /// <summary>
     /// Responsible to get common information
     /// </summary>
-    public class CommonClient
+    public class CommonClient : BaseClient
     { 
         private const string DEFAULT_HOST = "api.huobi.pro";
 
@@ -17,7 +18,7 @@ namespace Huobi.SDK.Core.Client
         /// Constructor
         /// </summary>
         /// <param name="host">the host that the client connects to</param>
-        public CommonClient(string host = DEFAULT_HOST)
+        public CommonClient(HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PublicUrlBuilder(host);
         }
@@ -30,7 +31,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = "https://status.huobigroup.com/api/v2/summary.json";
 
-            return await HttpRequest.GetStringAsync(url);
+            return await _httpRequestClient.GetStringAsync(url);
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/v2/market-status");
 
-            return await HttpRequest.GetAsync<GetMarketStatusResponse>(url);
+            return await _httpRequestClient.GetAsync<GetMarketStatusResponse>(url);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/v1/common/symbols");
 
-            return await HttpRequest.GetAsync<GetSymbolsResponse>(url);
+            return await _httpRequestClient.GetAsync<GetSymbolsResponse>(url);
         }
 
 
@@ -64,7 +65,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/v1/common/currencys");
 
-            return await HttpRequest.GetAsync<GetCurrencysResponse>(url);
+            return await _httpRequestClient.GetAsync<GetCurrencysResponse>(url);
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build($"/v2/reference/currencies?currency={currency}&authorizedUser={authorizedUser}");
 
-            return await HttpRequest.GetAsync<GetCurrencyResponse>(url);
+            return await _httpRequestClient.GetAsync<GetCurrencyResponse>(url);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build("/v1/common/timestamp");
 
-            return await HttpRequest.GetAsync<GetTimestampResponse>(url);
+            return await _httpRequestClient.GetAsync<GetTimestampResponse>(url);
         }
     }
 }

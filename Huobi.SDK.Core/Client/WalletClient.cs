@@ -2,13 +2,14 @@
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Wallet;
 using Huobi.SDK.Model.Request.Wallet;
+using System.Net.Http;
 
 namespace Huobi.SDK.Core.Client
 {
     /// <summary>
     /// Responsible to operate wallet
     /// </summary>
-    public class WalletClient
+    public class WalletClient : BaseClient
     {
         private const string GET_METHOD = "GET";
         private const string POST_METHOD = "POST";
@@ -23,7 +24,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="accessKey">Access Key</param>
         /// <param name="secretKey">Secret Key</param>
         /// <param name="host">the host that the client connects to</param>
-        public WalletClient(string accessKey, string secretKey, string host = DEFAULT_HOST)
+        public WalletClient(string accessKey, string secretKey, HttpClient httpClient = null, string host = DEFAULT_HOST) : base(httpClient)
         {
             _urlBuilder = new PrivateUrlBuilder(accessKey, secretKey, host);
         }
@@ -37,7 +38,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v2/account/deposit/address", request);
 
-            return await HttpRequest.GetAsync<GetDepositAddressResponse>(url);
+            return await _httpRequestClient.GetAsync<GetDepositAddressResponse>(url);
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v2/account/withdraw/quota", request);
 
-            return await HttpRequest.GetAsync<GetWithdrawQuotaResponse>(url);
+            return await _httpRequestClient.GetAsync<GetWithdrawQuotaResponse>(url);
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v2/account/withdraw/address", request);
 
-            return await HttpRequest.GetAsync<GetDepositAddressResponse>(url);
+            return await _httpRequestClient.GetAsync<GetDepositAddressResponse>(url);
         }
 
 
@@ -74,7 +75,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/dw/withdraw/api/create");
 
-            return await HttpRequest.PostAsync<WithdrawCurrencyResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<WithdrawCurrencyResponse>(url, request.ToJson());
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v1/dw/withdraw-virtual/{withdrawId}/cancel");
 
-            return await HttpRequest.PostAsync<CancelWithdrawCurrencyResponse>(url);
+            return await _httpRequestClient.PostAsync<CancelWithdrawCurrencyResponse>(url);
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(GET_METHOD, "/v1/query/deposit-withdraw", request);
 
-            return await HttpRequest.GetAsync<GetDepositWithdrawHistoryResponse>(url);
+            return await _httpRequestClient.GetAsync<GetDepositWithdrawHistoryResponse>(url);
         }
     }
 }
