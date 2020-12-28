@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Account
 {
@@ -20,13 +20,13 @@ namespace Huobi.SDK.Model.Response.Account
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public Ledger[] data;
 
         /// <summary>
         /// First record ID in next page (only valid if exceeded page size)
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public long nextId;
 
         /// <summary>

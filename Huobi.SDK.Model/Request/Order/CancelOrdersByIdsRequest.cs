@@ -1,18 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Order
 {
     public class CancelOrdersByIdsRequest
     {
-        [JsonProperty(PropertyName = "order-ids")]
+        [JsonPropertyName("order-ids")]
         public string[] OrderIds;
 
-        [JsonProperty(PropertyName = "client-order-ids")]
+        [JsonPropertyName("client-order-ids")]
         public string[] ClientOrderIds;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

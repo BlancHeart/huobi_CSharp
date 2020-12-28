@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using Huobi.SDK.Core.Model;
 
 namespace Huobi.SDK.Core.RequestBuilder
@@ -54,7 +55,7 @@ namespace Huobi.SDK.Core.RequestBuilder
                 }
             };
 
-            return auth.ToJson();
+            return JsonSerializerEx.Serialize(auth);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Margin
 {
@@ -15,19 +15,19 @@ namespace Huobi.SDK.Model.Response.Margin
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public LoanInfo[] data;
 
         /// <summary>
@@ -58,31 +58,31 @@ namespace Huobi.SDK.Model.Response.Margin
                 /// <summary>
                 /// Interest rate
                 /// </summary>
-                [JsonProperty("interest-rate")]
+                [JsonPropertyName("interest-rate")]
                 public string interestRate;
 
                 /// <summary>
                 /// Minimal loanable amount
                 /// </summary>
-                [JsonProperty("min-loan-amt")]
+                [JsonPropertyName("min-loan-amt")]
                 public string minLoadAmt;
 
                 /// <summary>
                 /// Maximum loanable amount
                 /// </summary>
-                [JsonProperty("max-loan-amt")]
+                [JsonPropertyName("max-loan-amt")]
                 public string maxLoanAmt;
 
                 /// <summary>
                 /// Remaining loanable amount
                 /// </summary>
-                [JsonProperty("loanable-amt")]
+                [JsonPropertyName("loanable-amt")]
                 public string loanableAmt;
 
                 /// <summary>
                 /// Actual interest rate
                 /// </summary>
-                [JsonProperty("actual-rate")]
+                [JsonPropertyName("actual-rate")]
                 public string ActualRate;
             }
         }

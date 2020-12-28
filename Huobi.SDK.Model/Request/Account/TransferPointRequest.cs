@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Account
 {
@@ -11,10 +11,5 @@ namespace Huobi.SDK.Model.Request.Account
         public long groupId;
 
         public string amount;
-        
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

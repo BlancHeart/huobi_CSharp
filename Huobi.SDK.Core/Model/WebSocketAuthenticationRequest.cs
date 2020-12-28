@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace Huobi.SDK.Core.Model
 {
@@ -10,10 +10,5 @@ namespace Huobi.SDK.Core.Model
         public string SignatureVersion { get { return "2"; } }
         public string Timestamp;
         public string Signature;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

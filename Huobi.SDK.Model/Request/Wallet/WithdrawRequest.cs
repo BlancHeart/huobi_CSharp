@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Wallet
 {
@@ -15,10 +15,5 @@ namespace Huobi.SDK.Model.Request.Wallet
         public string chain;
 
         public string addrTag;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

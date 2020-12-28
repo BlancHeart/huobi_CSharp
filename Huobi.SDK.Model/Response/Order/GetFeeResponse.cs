@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -17,19 +17,19 @@ namespace Huobi.SDK.Model.Response.Order
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public Fee[] data;
 
         /// <summary>
@@ -45,13 +45,13 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// Maker fee rate
             /// </summary>
-            [JsonProperty("maker-fee")]
+            [JsonPropertyName("maker-fee")]
             public string makerFee;
 
             /// <summary>
             /// Taker fee rate
             /// </summary>
-            [JsonProperty("taker-fee")]
+            [JsonPropertyName("taker-fee")]
             public string takerFee;
         }
     }

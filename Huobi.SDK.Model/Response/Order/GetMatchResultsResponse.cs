@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -15,19 +15,19 @@ namespace Huobi.SDK.Model.Response.Order
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public MatchResult[] data;
 
         /// <summary>
@@ -43,19 +43,19 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// Order id of this order
             /// </summary>
-            [JsonProperty("order-id")]
+            [JsonPropertyName("order-id")]
             public long orderId;
 
             /// <summary>
             /// Match id of this match
             /// </summary>
-            [JsonProperty("match-id")]
+            [JsonPropertyName("match-id")]
             public long matchId;
 
             /// <summary>
             /// Unique trade id (NEW)
             /// </summary>
-            [JsonProperty("trade-id")]
+            [JsonPropertyName("trade-id")]
             public long tradeId;
 
             /// <summary>
@@ -66,13 +66,13 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The limit price of limit order
             /// </summary>
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            
             public string price;
 
             /// <summary>
             /// The timestamp in milliseconds when the match and fill is done
             /// </summary>
-            [JsonProperty("created-at")]
+            [JsonPropertyName("created-at")]
             public long createdAt;
 
             /// <summary>
@@ -87,19 +87,19 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The amount which has been filled
             /// </summary>
-            [JsonProperty("filled-amount")]
+            [JsonPropertyName("filled-amount")]
             public string filledAmount;
             
             /// <summary>
             /// Transaction fee paid so far
             /// </summary>
-            [JsonProperty("filled-fees")]
+            [JsonPropertyName("filled-fees")]
             public string filledFees;
 
             /// <summary>
             /// Currency of transaction fee or transaction fee rebate
             /// </summary>
-            [JsonProperty("fee-currency")]
+            [JsonPropertyName("fee-currency")]
             public string feeCurrency;
 
             /// <summary>
@@ -117,13 +117,13 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// Deduction amount (unit: in ht or hbpoint)
             /// </summary>
-            [JsonProperty("filled-points")]
+            [JsonPropertyName("filled-points")]
             public string filledPoints;
 
             /// <summary>
             /// Deduction type. if blank, the transaction fee is based on original currency; if showing value as "ht", the transaction fee is deducted by HT; if showing value as "hbpoint", the transaction fee is deducted by HB point.
             /// </summary>
-            [JsonProperty("fee-deduct-currency")]
+            [JsonPropertyName("fee-deduct-currency")]
             public string feeDeductCurrency;
         }
     }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.ETF
 {
@@ -20,13 +20,13 @@ namespace Huobi.SDK.Model.Response.ETF
         /// <summary>
         /// Error message (if any)
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public string message;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public object data;
     }
 }

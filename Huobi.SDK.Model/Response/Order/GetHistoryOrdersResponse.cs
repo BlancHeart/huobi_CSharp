@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -15,19 +15,19 @@ namespace Huobi.SDK.Model.Response.Order
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public HistoryOrder[] data;
 
         /// <summary>
@@ -43,19 +43,19 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// Client order id (if specified)
             /// </summary>
-            [JsonProperty("client-order-id")]
+            [JsonPropertyName("client-order-id")]
             public string ClientOrderId;
 
             /// <summary>
             /// The account id
             /// </summary>
-            [JsonProperty("account-id")]
+            [JsonPropertyName("account-id")]
             public int accountId;
 
             /// <summary>
             /// User id
             /// </summary>
-            [JsonProperty("user-id")]
+            [JsonPropertyName("user-id")]
             public int userId;
 
             /// <summary>
@@ -76,19 +76,19 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The timestamp in milliseconds when the order was created
             /// </summary>
-            [JsonProperty("created-at")]
+            [JsonPropertyName("created-at")]
             public long createdAt;
 
             /// <summary>
             /// The timestamp in milliseconds when the order was canceled, or 0 if not canceled
             /// </summary>
-            [JsonProperty("canceled-at")]
+            [JsonPropertyName("canceled-at")]
             public long canceledAt;
 
             /// <summary>
             /// The timestamp in milliseconds when the order was finished, or 0 if not finished
             /// </summary>
-            [JsonProperty("finished-at")]
+            [JsonPropertyName("finished-at")]
             public long finishedAt;
 
             /// <summary>
@@ -103,19 +103,19 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The amount which has been filled
             /// </summary>
-            [JsonProperty("filled-amount")]
+            [JsonPropertyName("filled-amount")]
             public string filledAmount;
 
             /// <summary>
             /// The filled total in quote currency
             /// </summary>
-            [JsonProperty("filled-cash-amount")]
+            [JsonPropertyName("filled-cash-amount")]
             public string filledCashAmount;
 
             /// <summary>
             /// Transaction fee paid so far
             /// </summary>
-            [JsonProperty("filled-fees")]
+            [JsonPropertyName("filled-fees")]
             public string filledFees;
 
             /// <summary>
@@ -143,7 +143,7 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// Trigger price of stop limit order
             /// </summary>
-            [JsonProperty("stop-price")]
+            [JsonPropertyName("stop-price")]
             public string stopPrice;
 
             /// <summary>

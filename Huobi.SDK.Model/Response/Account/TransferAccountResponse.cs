@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Account
 {
@@ -6,20 +6,20 @@ namespace Huobi.SDK.Model.Response.Account
     {
         public string status;
 
-        [JsonProperty("err-code")]
+        [JsonPropertyName("err-code")]
         public string errCode;
 
-        [JsonProperty("err-msg")]
+        [JsonPropertyName("err-msg")]
         public string errMessage;
 
         public TransferResponse data;
 
         public class TransferResponse
         {
-            [JsonProperty("transact-id")]
+            [JsonPropertyName("transact-id")]
             public int transactId;
 
-            [JsonProperty("transact-time")]
+            [JsonPropertyName("transact-time")]
             public long transactTime;
         }
     }

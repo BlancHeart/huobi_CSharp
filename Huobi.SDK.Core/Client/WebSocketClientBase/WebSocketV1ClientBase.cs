@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Timers;
-using Huobi.SDK.Core.Log;
 using Huobi.SDK.Core.Model;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Auth;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using WebSocketSharp;
 
 namespace Huobi.SDK.Core.Client.WebSocketClientBase
@@ -139,7 +137,7 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
             {
                 string data = GZipDecompresser.Decompress(e.RawData);
 
-                var pingMessage = JsonConvert.DeserializeObject<PingMessageV1>(data);
+                var pingMessage = JsonSerializerEx.Deserialize<PingMessageV1>(data);
                 if (pingMessage.IsPing())
                 {
                     _logger.Log(Log.LogLevel.Trace, $"WebSocket received data, ping={pingMessage.ts}");
@@ -149,17 +147,17 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
                 }
                 else
                 {
-                    dynamic json = JToken.Parse(data);
-                    string op = json.op;
+                    using var jsonDoc = JsonDocument.Parse(data);
+                    string op = jsonDoc.RootElement.GetProperty("op").GetString();
                     if (string.Equals(op, "auth"))
                     {
-                        var response = JsonConvert.DeserializeObject<WebSocketV1AuthResponse>(data);
+                        var response = JsonSerializerEx.Deserialize<WebSocketV1AuthResponse>(data);
 
                         OnAuthenticationReceived?.Invoke(response);
                     }
                     else
                     {
-                        var response = JsonConvert.DeserializeObject<DataResponseType>(data);
+                        var response = JsonSerializerEx.Deserialize<DataResponseType>(data);
 
                         OnDataReceived?.Invoke(response);
                     }

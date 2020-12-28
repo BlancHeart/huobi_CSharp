@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Order
 {
     public class PlaceOrderRequest
     {
-        [JsonProperty(PropertyName="account-id")]
+        [JsonPropertyName("account-id")]
         public string AccountId;
 
         public string symbol;
@@ -17,18 +17,13 @@ namespace Huobi.SDK.Model.Request.Order
 
         public string source;
 
-        [JsonProperty(PropertyName="client-order-id")]
+        [JsonPropertyName("client-order-id")]
         public string ClientOrderId;
 
-        [JsonProperty(PropertyName = "stop-price")]
+        [JsonPropertyName("stop-price")]
         public string StopPrice;
 
-        [JsonProperty(PropertyName = "operator")]
+        [JsonPropertyName("operator")]
         public string Operator;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

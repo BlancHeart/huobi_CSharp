@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.WebSocket
 {
@@ -20,7 +20,7 @@ namespace Huobi.SDK.Model.Response.WebSocket
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code")]
+        [JsonPropertyName("err-code")]
         public int errCode;
 
         /// <summary>

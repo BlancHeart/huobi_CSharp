@@ -1,5 +1,5 @@
 ﻿using Huobi.SDK.Model.Response.WebSocket;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Account
 {
@@ -35,7 +35,7 @@ namespace Huobi.SDK.Model.Response.Account
                 /// <summary>
                 /// The account id of this individual balance
                 /// </summary>
-                [JsonProperty("account-id")]
+                [JsonPropertyName("account-id")]
                 public int accountId;
 
                 /// <summary>

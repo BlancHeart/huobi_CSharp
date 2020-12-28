@@ -75,7 +75,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/dw/withdraw/api/create");
 
-            return await _httpRequestClient.PostAsync<WithdrawCurrencyResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<WithdrawCurrencyResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>

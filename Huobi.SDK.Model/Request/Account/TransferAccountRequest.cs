@@ -1,34 +1,29 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Account
 {
     public class TransferAccountRequest
     {
-        [JsonProperty("from-user")]
+        [JsonPropertyName("from-user")]
         public long fromUser;
 
-        [JsonProperty("from-account-type")]
+        [JsonPropertyName("from-account-type")]
         public string fromAccountType;
 
-        [JsonProperty("from-account")]
+        [JsonPropertyName("from-account")]
         public long fromAccount;
 
-        [JsonProperty("to-user")]
+        [JsonPropertyName("to-user")]
         public long toUser;
 
-        [JsonProperty("to-account-type")]
+        [JsonPropertyName("to-account-type")]
         public string toAccountType;
 
-        [JsonProperty("to-account")]
+        [JsonPropertyName("to-account")]
         public long toAccount;
 
         public string currency;
 
         public string amount;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

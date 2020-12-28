@@ -40,7 +40,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v2/sub-user/creation");
 
-            return await _httpRequestClient.PostAsync<CreateSubUserResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CreateSubUserResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>

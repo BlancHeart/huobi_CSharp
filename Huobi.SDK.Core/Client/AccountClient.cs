@@ -88,7 +88,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/account/transfer");
 
-            return await _httpRequestClient.PostAsync<TransferAccountResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<TransferAccountResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v2/point/transfer");
 
-            return await _httpRequestClient.PostAsync<TransferPointResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<TransferPointResponse>(url, JsonSerializerEx.Serialize(request));
         }
     }
 }

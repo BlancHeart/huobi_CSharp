@@ -1,5 +1,5 @@
 ﻿using Huobi.SDK.Model.Response.WebSocket;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {

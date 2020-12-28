@@ -1,12 +1,10 @@
 ﻿using System;
+using System.Text.Json;
 using System.Timers;
-using Huobi.SDK.Core.Log;
 using Huobi.SDK.Core.Model;
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Auth;
 using Huobi.SDK.Model.Response.WebSocket;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using WebSocketSharp;
 
 namespace Huobi.SDK.Core.Client.WebSocketClientBase
@@ -36,7 +34,7 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
         private const int RENEW_WAIT_SECOND = 120;
 
         private readonly WebSocketV2RequestBuilder _wsV2ReqBuilder;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -143,13 +141,13 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
                 data = GZipDecompresser.Decompress(e.RawData);
             }
 
-            dynamic json = JToken.Parse(data);
-            string ch = json.action;
+            using var jsonDoc = JsonDocument.Parse(data);
+            string ch = jsonDoc.RootElement.GetProperty("action").GetString();
             switch (ch)
             {
                 case "ping": // Receive Ping message
                     {
-                        var pingMessageV2 = JsonConvert.DeserializeObject<PingMessageV2>(data);
+                        var pingMessageV2 = JsonSerializerEx.Deserialize<PingMessageV2>(data);
                         if (pingMessageV2 != null && pingMessageV2.data != null && pingMessageV2.data.ts != 0)
                         {
                             long ts = pingMessageV2.data.ts;
@@ -165,7 +163,7 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
                     }
                 case "req": // Receive authentication response
                     {
-                        var response = JsonConvert.DeserializeObject<WebSocketV2AuthResponse>(data);
+                        var response = JsonSerializerEx.Deserialize<WebSocketV2AuthResponse>(data);
 
                         OnAuthenticationReceived?.Invoke(response);
 
@@ -174,7 +172,7 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
                 case "sub": // Receive subscription response
                 case "push": // Receive data response
                     {
-                        var response = JsonConvert.DeserializeObject<DataResponseType>(data);
+                        var response = JsonSerializerEx.Deserialize<DataResponseType>(data);
 
                         OnDataReceived?.Invoke(response);
 

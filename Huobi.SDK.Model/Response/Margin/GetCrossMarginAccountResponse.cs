@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Margin
 {
@@ -18,13 +16,13 @@ namespace Huobi.SDK.Model.Response.Margin
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
@@ -53,17 +51,17 @@ namespace Huobi.SDK.Model.Response.Margin
             /// Possible values: [created, accrual, cleared, invalid]
             /// </summary>
             public string state;
-            
+
             /// <summary>
             /// Sum of all account balance
             /// </summary>
-            [JsonProperty("acct-balance-sum")]
+            [JsonPropertyName("acct-balance-sum")]
             public string AcctBalanceSum;
 
             /// <summary>
             /// Sum of all debt balance
             /// </summary>
-            [JsonProperty("debt-balance-sum")]
+            [JsonPropertyName("debt-balance-sum")]
             public string DebtBalanceSum;
 
             /// <summary>
@@ -91,37 +89,6 @@ namespace Huobi.SDK.Model.Response.Margin
                 /// </summary>
                 public string balance;
             }
-
         }
     }
-
-    class SingleOrArrayConverter<T> : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return (objectType == typeof(List<T>));
-        }
-
-        public override object ReadJson(JsonReader reader, Type objecType, object existingValue,
-            JsonSerializer serializer)
-        {
-            JToken token = JToken.Load(reader);
-            if (token.Type == JTokenType.Array)
-            {
-                return token.ToObject<List<T>>();
-            }
-            return new List<T> { token.ToObject<T>() };
-        }
-
-        public override bool CanWrite
-        {
-            get { return false; }
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

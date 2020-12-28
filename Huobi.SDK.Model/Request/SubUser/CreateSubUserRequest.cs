@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.SubUser
 {
@@ -14,11 +14,6 @@ namespace Huobi.SDK.Model.Request.SubUser
             public string userName;
 
             public string note;
-        }
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
         }
     }
 }

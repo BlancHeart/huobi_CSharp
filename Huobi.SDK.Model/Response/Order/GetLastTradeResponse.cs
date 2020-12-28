@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -52,7 +52,7 @@ namespace Huobi.SDK.Model.Response.Order
                 /// <summary>
                 /// The unique trade id (NEW)
                 /// </summary>
-                [JsonProperty(PropertyName = "trade-id")]
+                [JsonPropertyName("trade-id")]
                 public long tradeId;
 
                 /// <summary>

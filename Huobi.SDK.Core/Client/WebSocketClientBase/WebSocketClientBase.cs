@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Timers;
-using Huobi.SDK.Core.Log;
 using Huobi.SDK.Core.Model;
-using Newtonsoft.Json;
 using WebSocketSharp;
 
 namespace Huobi.SDK.Core.Client.WebSocketClientBase
@@ -130,7 +128,7 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
             {
                 string data = GZipDecompresser.Decompress(e.RawData);
 
-                var pingMessage = JsonConvert.DeserializeObject<PingMessage>(data);
+                var pingMessage = JsonSerializerEx.Deserialize<PingMessage>(data);
                 if (pingMessage != null && pingMessage.ping != 0)
                 {
                     _logger.Log(Log.LogLevel.Trace, $"WebSocekt received data, ping={pingMessage.ping}");
@@ -140,7 +138,7 @@ namespace Huobi.SDK.Core.Client.WebSocketClientBase
                 }
                 else
                 {
-                    var response = JsonConvert.DeserializeObject<DataResponseType>(data);
+                    var response = JsonSerializerEx.Deserialize<DataResponseType>(data);
 
                     OnResponseReceived?.Invoke(response);
                 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Account
 {
@@ -48,7 +48,7 @@ namespace Huobi.SDK.Model.Response.Account
                 /// <summary>
                 /// Expiration date (unix time in millisecond)
                 /// </summary>
-                [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+                
                 public long expiryDate;
 
                 /// <summary>

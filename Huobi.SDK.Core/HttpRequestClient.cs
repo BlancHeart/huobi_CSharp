@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Huobi.SDK.Core.Log;
-using Newtonsoft.Json;
 
 namespace Huobi.SDK.Core
 {
@@ -38,7 +37,7 @@ namespace Huobi.SDK.Core
 
             _logger.RequestEnd();
 
-            T t = JsonConvert.DeserializeObject<T>(response);
+            T t = JsonSerializerEx.Deserialize<T>(response);
 
             return t;
         }
@@ -89,7 +88,7 @@ namespace Huobi.SDK.Core
 
             _logger.RequestEnd();
 
-            T t = JsonConvert.DeserializeObject<T>(result);
+            T t = JsonSerializerEx.Deserialize<T>(result);
 
             return t;
         }

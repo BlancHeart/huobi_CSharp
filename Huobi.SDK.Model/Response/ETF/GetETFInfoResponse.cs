@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.ETF
 {
@@ -20,7 +20,7 @@ namespace Huobi.SDK.Model.Response.ETF
         /// <summary>
         /// Error message (if any)
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public string message;
 
         /// <summary>
@@ -36,56 +36,56 @@ namespace Huobi.SDK.Model.Response.ETF
             /// <summary>
             /// ETF name
             /// </summary>
-            [JsonProperty("etf_name")]
+            [JsonPropertyName("etf_name")]
             public string etfName;
 
             /// <summary>
             /// status of the ETF
             /// Possible values: Normal(1), Rebalancing Start(2), Creation and Redemption Suspended(3), Creation Suspended(4), Redemption Suspended(5)
             /// </summary>
-            [JsonProperty("etf_status")]
+            [JsonPropertyName("etf_status")]
             public int etfStatus;
 
             /// <summary>
             /// Creation fee rate
             /// </summary>
-            [JsonProperty("purchase_fee_rate")]
+            [JsonPropertyName("purchase_fee_rate")]
             public double purchaseFeeRate;
 
             /// <summary>
             /// Max creation amounts per request
             /// </summary>
-            [JsonProperty("purchase_max_amount")]
+            [JsonPropertyName("purchase_max_amount")]
             public int purchaseMaxAmount;
 
             /// <summary>
             /// Minimum creation amounts per request
             /// </summary>
-            [JsonProperty("purchase_min_amount")]
+            [JsonPropertyName("purchase_min_amount")]
             public int purchaseMinAmount;
 
             /// <summary>
             /// Redemption fee rate
             /// </summary>
-            [JsonProperty("redemption_fee_rate")]
+            [JsonPropertyName("redemption_fee_rate")]
             public double redemptionFeeRate;
 
             /// <summary>
             /// Max redemption amounts per request
             /// </summary>
-            [JsonProperty("redemption_max_amount")]
+            [JsonPropertyName("redemption_max_amount")]
             public int redemptionMaxAmount;
 
             /// <summary>
             /// Minimum redemption amounts per request
             /// </summary>
-            [JsonProperty("redemption_min_amount")]
+            [JsonPropertyName("redemption_min_amount")]
             public int redemptionMinAmount;
 
             /// <summary>
             /// ETF constitution array
             /// </summary>
-            [JsonProperty("unit_price")]
+            [JsonPropertyName("unit_price")]
             public Price[] unitPrice;
 
             /// <summary>

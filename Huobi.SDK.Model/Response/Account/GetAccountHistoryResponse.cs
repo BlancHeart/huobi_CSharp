@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Account
 {
@@ -15,19 +15,19 @@ namespace Huobi.SDK.Model.Response.Account
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public History[] data;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Huobi.SDK.Model.Response.Account
             /// <summary>
             /// Account id
             /// </summary>
-            [JsonProperty(PropertyName = "account-id")]
+            [JsonPropertyName("account-id")]
             public long accountId;
 
             /// <summary>
@@ -49,7 +49,7 @@ namespace Huobi.SDK.Model.Response.Account
             /// <summary>
             /// Amount change (positive value if income, negative value if outcome)
             /// </summary>
-            [JsonProperty(PropertyName = "transact-amt")]
+            [JsonPropertyName("transact-amt")]
             public string transactAmt;
 
             /// <summary>
@@ -57,38 +57,38 @@ namespace Huobi.SDK.Model.Response.Account
             /// Possible values: [trade,etf, transact-fee, deduction, transfer, credit, liquidation,
             ///     interest, deposit-withdraw, withdraw-fee, exchange, other-types]
             /// </summary>
-            [JsonProperty(PropertyName = "transact-type")]
+            [JsonPropertyName("transact-type")]
             public string transactType;
 
             /// <summary>
             /// Available balance
             /// </summary>
-            [JsonProperty(PropertyName = "avail-balance")]
+            [JsonPropertyName("avail-balance")]
             public string availableBalance;
 
             /// <summary>
             /// Account balance
             /// </summary>
-            [JsonProperty(PropertyName = "acct-balance")]
+            [JsonPropertyName("acct-balance")]
             public string accountBalance;
 
             /// <summary>
             /// Transaction time (database time)
             /// </summary>
-            [JsonProperty(PropertyName = "transact-time")]
+            [JsonPropertyName("transact-time")]
             public long transactTime;
 
             /// <summary>
             /// Unique record ID in the database
             /// </summary>
-            [JsonProperty(PropertyName = "record-id")]
+            [JsonPropertyName("record-id")]
             public string recordId;
         }
 
         /// <summary>
         /// First record ID in next page (only valid if exceeded page size)
         /// </summary>
-        [JsonProperty("next-id")]
+        [JsonPropertyName("next-id")]
         public long nextId;
     }
 }

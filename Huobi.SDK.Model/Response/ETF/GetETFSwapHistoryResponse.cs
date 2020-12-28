@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.ETF
 {
@@ -20,13 +20,13 @@ namespace Huobi.SDK.Model.Response.ETF
         /// <summary>
         /// Error message (if any)
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public string message;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public History[] data;
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Huobi.SDK.Model.Response.ETF
             /// <summary>
             /// Operation timestamp
             /// </summary>
-            [JsonProperty("gmt_created")]
+            [JsonPropertyName("gmt_created")]
             public long gmtCreated;
 
             /// <summary>
@@ -79,7 +79,7 @@ namespace Huobi.SDK.Model.Response.ETF
                 /// <summary>
                 /// UsedCurrency list
                 /// </summary>
-                [JsonProperty("used_currency_list")]
+                [JsonPropertyName("used_currency_list")]
                 public UsedCurrency[] usedCurrencyList;
 
                 /// <summary>
@@ -112,13 +112,13 @@ namespace Huobi.SDK.Model.Response.ETF
                 /// <summary>
                 /// Discount from point card
                 /// </summary>
-                [JsonProperty("point-card-amount")]
+                [JsonPropertyName("point-card-amount")]
                 public double pointCardAmount;
 
                 /// <summary>
                 /// ObtainCurrency list
                 /// </summary>
-                [JsonProperty("obtain_currency_list")]
+                [JsonPropertyName("obtain_currency_list")]
                 public ObtainCurrency[] obtainCurrencyList;
 
                 /// <summary>

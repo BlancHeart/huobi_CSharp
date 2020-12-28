@@ -38,7 +38,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v2/algo-orders");
 
-            return await _httpRequestClient.PostAsync<PlaceOrderResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<PlaceOrderResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v2/algo-orders/cancellation");
 
-            return await _httpRequestClient.PostAsync<CancelOrdersResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CancelOrdersResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>

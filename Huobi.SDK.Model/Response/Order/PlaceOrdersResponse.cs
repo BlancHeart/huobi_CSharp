@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -15,7 +15,7 @@ namespace Huobi.SDK.Model.Response.Order
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public PlaceOrderResult[] data;
 
         /// <summary>
@@ -26,38 +26,38 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The order id
             /// </summary>
-            [JsonProperty("order-id")]
+            [JsonPropertyName("order-id")]
             public long orderId;
 
             /// <summary>
             /// The client order id (if any)
             /// </summary>
-            [JsonProperty("client-order-id", NullValueHandling = NullValueHandling.Ignore)]
+            [JsonPropertyName("client-order-id")]
             public string clientOrderId;
 
             /// <summary>
             /// Error code for rejected order
             /// </summary>
-            [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+            [JsonPropertyName("err-code")]
             public string errorCode;
 
             /// <summary>
             /// Error message for rejected order
             /// </summary>
-            [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+            [JsonPropertyName("err-msg")]
             public string errorMessage;
         }
 
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
     }
 }

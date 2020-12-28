@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Margin
 {
@@ -15,19 +15,19 @@ namespace Huobi.SDK.Model.Response.Margin
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
 
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public Account[] data;
 
         /// <summary>
@@ -59,13 +59,13 @@ namespace Huobi.SDK.Model.Response.Margin
             /// <summary>
             /// The risk rate
             /// </summary>
-            [JsonProperty("risk-rate")]
+            [JsonPropertyName("risk-rate")]
             public string riskRate;
 
             /// <summary>
             /// The price which triggers closeout
             /// </summary>
-            [JsonProperty("fl-price")]
+            [JsonPropertyName("fl-price")]
             public string flPrice;
 
             /// <summary>

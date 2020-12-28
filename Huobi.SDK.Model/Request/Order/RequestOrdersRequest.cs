@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Order
 {
@@ -10,7 +10,7 @@ namespace Huobi.SDK.Model.Request.Order
 
         public string cid;
 
-        [JsonProperty(PropertyName = "account-id")]
+        [JsonPropertyName("account-id")]
         public int AccountId;
 
         public string symbol;
@@ -19,10 +19,10 @@ namespace Huobi.SDK.Model.Request.Order
 
         public string states;
 
-        [JsonProperty(PropertyName = "start-date")]
+        [JsonPropertyName("start-date")]
         public string StartDate;
 
-        [JsonProperty(PropertyName = "end-date")]
+        [JsonPropertyName("end-date")]
         public string EndDate;
 
         public string from;
@@ -30,10 +30,5 @@ namespace Huobi.SDK.Model.Request.Order
         public string direct;
 
         public string size;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

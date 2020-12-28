@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using Huobi.SDK.Core.Model;
 
 namespace Huobi.SDK.Core.RequestBuilder
@@ -26,7 +27,7 @@ namespace Huobi.SDK.Core.RequestBuilder
             _host = host;
             _path = path;
         }
-        
+
         public string Build()
         {
             return Build(DateTime.UtcNow);
@@ -51,7 +52,7 @@ namespace Huobi.SDK.Core.RequestBuilder
                 Signature = signature
             };
 
-            return auth.ToJson();
+            return JsonSerializerEx.Serialize(auth);
         }
     }
 }

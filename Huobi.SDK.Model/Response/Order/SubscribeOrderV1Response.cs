@@ -1,5 +1,5 @@
 ﻿using Huobi.SDK.Model.Response.WebSocket;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -20,13 +20,13 @@ namespace Huobi.SDK.Model.Response.Order
             /// While order-state = submitted, canceled, partial-canceled,match-id refers to sequence number;
             /// While order-state = filled, partial-filled, match-id refers to last match ID.
             /// </summary>
-            [JsonProperty("match-id")]
+            [JsonPropertyName("match-id")]
             public int matchId;
 
             /// <summary>
             /// Order id
             /// </summary>
-            [JsonProperty("order-id")]
+            [JsonPropertyName("order-id")]
             public long orderId;
 
             /// <summary>
@@ -38,7 +38,7 @@ namespace Huobi.SDK.Model.Response.Order
             /// Order states
             /// Possible values: submitted, partial-filled, filled, canceled, partial-canceled
             /// </summary>
-            [JsonProperty("order-state")]
+            [JsonPropertyName("order-state")]
             public string orderState;
 
             /// <summary>
@@ -59,13 +59,13 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// Last execution quantity (in base currency)
             /// </summary>
-            [JsonProperty("filled-amount")]
+            [JsonPropertyName("filled-amount")]
             public string filledAmount;
 
             /// <summary>
             /// Last execution value (in quote currency)
             /// </summary>
-            [JsonProperty("filled-cash-amount")]
+            [JsonPropertyName("filled-cash-amount")]
             public string filledCashAmount;
 
             /// <summary>
@@ -78,13 +78,13 @@ namespace Huobi.SDK.Model.Response.Order
             /// While order-state = partial-filled AND role = taker, unfilled-amount is the remaining order quantity;
             /// While order-state = partial-filled AND role = maker, unfilled-amount is remaining order quantity.
             /// </summary>
-            [JsonProperty("unfilled-amount")]
+            [JsonPropertyName("unfilled-amount")]
             public string unfilledAmount;
 
             /// <summary>
             /// Client order id
             /// </summary>
-            [JsonProperty("client-order-id")]
+            [JsonPropertyName("client-order-id")]
             public string clientOrderId;
 
             /// <summary>
@@ -95,7 +95,7 @@ namespace Huobi.SDK.Model.Response.Order
             /// Note that the order type 'buy-stop-limit-fok' and 'sell-stop-limit-fok' will be converted to
             /// 'buy-limit-fok' and 'sell-limit-fok'
             /// </summary>
-            [JsonProperty("order-type")]
+            [JsonPropertyName("order-type")]
             public string orderType;
         }
     }

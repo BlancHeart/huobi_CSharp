@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Wallet
 {
@@ -41,7 +41,7 @@ namespace Huobi.SDK.Model.Response.Wallet
             /// <summary>
             /// The on-chain transaction hash
             /// </summary>
-            [JsonProperty("tx-hash")]
+            [JsonPropertyName("tx-hash")]
             public string txHash;
 
             /// <summary>
@@ -62,7 +62,7 @@ namespace Huobi.SDK.Model.Response.Wallet
             /// <summary>
             /// The user defined address tag
             /// </summary>
-            [JsonProperty("address-tag")]
+            [JsonPropertyName("address-tag")]
             public string addressTag;
 
             /// <summary>
@@ -81,14 +81,14 @@ namespace Huobi.SDK.Model.Response.Wallet
             /// Error code for withdrawal failure, only returned when the type is "withdraw" and
             /// the state is "reject", "wallet-reject" and "failed".
             /// </summary>
-            [JsonProperty("error-code")]
+            [JsonPropertyName("error-code")]
             public string errorCode;
 
             /// <summary>
             /// Error description of withdrawal failure, only returned when the type is "withdraw" and
             /// the state is "reject", "wallet-reject" and "failed".
             /// </summary>
-            [JsonProperty("error-msg")]
+            [JsonPropertyName("error-msg")]
             public string errorMessage;
 
             /// <summary>

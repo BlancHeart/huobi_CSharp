@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.StableCoin
 {
@@ -15,12 +15,12 @@ namespace Huobi.SDK.Model.Response.StableCoin
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public Data data;
 
         public class Data
         {
-            [JsonProperty("transact-id")]
+            [JsonPropertyName("transact-id")]
             public long transactId;
 
             public string currency;
@@ -29,10 +29,10 @@ namespace Huobi.SDK.Model.Response.StableCoin
 
             public string type;
 
-            [JsonProperty("exchange-amount")]
+            [JsonPropertyName("exchange-amount")]
             public string exchangeAmount;
 
-            [JsonProperty("exchange-fee")]
+            [JsonPropertyName("exchange-fee")]
             public string exchangeFee;
 
             public long time;
@@ -41,13 +41,13 @@ namespace Huobi.SDK.Model.Response.StableCoin
         /// <summary>
         /// Error code
         /// </summary>
-        [JsonProperty("err-code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-code")]
         public string errorCode;
 
         /// <summary>
         /// Error message
         /// </summary>
-        [JsonProperty("err-msg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("err-msg")]
         public string errorMessage;
     }
 }

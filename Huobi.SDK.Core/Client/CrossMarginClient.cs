@@ -134,7 +134,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v2/account/repayment");
 
-            return await _httpRequestClient.PostAsync<GeneralRepayResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<GeneralRepayResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>

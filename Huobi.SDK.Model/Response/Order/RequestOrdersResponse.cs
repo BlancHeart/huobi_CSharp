@@ -1,5 +1,5 @@
 ﻿using Huobi.SDK.Model.Response.WebSocket;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Response.Order
 {
@@ -11,7 +11,7 @@ namespace Huobi.SDK.Model.Response.Order
         /// <summary>
         /// Response body
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        
         public Order[] data;
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The account id
             /// </summary>
-            [JsonProperty("account-id")]
+            [JsonPropertyName("account-id")]
             public int accountId;
 
             /// <summary>
@@ -48,7 +48,7 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The timestamp in milliseconds when the order was created
             /// </summary>
-            [JsonProperty("created-at")]
+            [JsonPropertyName("created-at")]
             public long createdAt;
 
             /// <summary>
@@ -63,19 +63,19 @@ namespace Huobi.SDK.Model.Response.Order
             /// <summary>
             /// The amount which has been filled
             /// </summary>
-            [JsonProperty("filled-amount")]
+            [JsonPropertyName("filled-amount")]
             public string filledAmount;
 
             /// <summary>
             /// The filled total in quote currency
             /// </summary>
-            [JsonProperty("filled-cash-amount")]
+            [JsonPropertyName("filled-cash-amount")]
             public string filledCashAmount;
 
             /// <summary>
             /// Transaction fee paid so far
             /// </summary>
-            [JsonProperty("filled-fees")]
+            [JsonPropertyName("filled-fees")]
             public string filledFees;
 
             /// <summary>

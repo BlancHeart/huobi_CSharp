@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Huobi.SDK.Core.Model
 {
@@ -18,11 +18,5 @@ namespace Huobi.SDK.Core.Model
         public string action { get { return "req"; } }
         public string ch { get { return "auth"; } }
         public Params @params;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
-
 }

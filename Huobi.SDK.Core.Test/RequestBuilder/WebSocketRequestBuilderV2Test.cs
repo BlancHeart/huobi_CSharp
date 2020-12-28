@@ -1,7 +1,6 @@
 ﻿using System;
 using Huobi.SDK.Core.Model;
 using Huobi.SDK.Core.RequestBuilder;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Huobi.SDK.Core.Test.RequestBuilder
@@ -15,7 +14,7 @@ namespace Huobi.SDK.Core.Test.RequestBuilder
 
             string auth = builder.Build();
 
-            var authReq = JsonConvert.DeserializeObject<WebSocketAuthenticationRequestV2>(auth);
+            var authReq = JsonSerializerEx.Deserialize<WebSocketAuthenticationRequestV2>(auth);
 
             Assert.Equal("req", authReq.action);
             Assert.Equal("auth", authReq.ch);
@@ -33,7 +32,7 @@ namespace Huobi.SDK.Core.Test.RequestBuilder
             DateTime utcTime = new DateTime(2019, 11, 21, 10, 0, 0);
             string auth = builder.Build(utcTime);
 
-            var authReq = JsonConvert.DeserializeObject<WebSocketAuthenticationRequestV2>(auth);
+            var authReq = JsonSerializerEx.Deserialize<WebSocketAuthenticationRequestV2>(auth);
 
             Assert.Equal("req", authReq.action);
             Assert.Equal("auth", authReq.ch);

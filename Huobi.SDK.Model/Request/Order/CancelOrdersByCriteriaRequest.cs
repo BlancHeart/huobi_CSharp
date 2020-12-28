@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Huobi.SDK.Model.Request.Order
 {
     public class CancelOrdersByCriteriaRequest
     {
-        [JsonProperty(PropertyName = "account-id")]
+        [JsonPropertyName("account-id")]
         public string AccountId;
 
         public string symbol;
@@ -12,10 +12,5 @@ namespace Huobi.SDK.Model.Request.Order
         public string side;
 
         public int size;
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

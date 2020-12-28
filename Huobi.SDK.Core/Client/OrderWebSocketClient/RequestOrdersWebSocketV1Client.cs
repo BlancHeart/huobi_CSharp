@@ -2,6 +2,7 @@
 using Huobi.SDK.Model.Response.Order;
 using Huobi.SDK.Model.Request.Order;
 using Huobi.SDK.Core.Log;
+using System.Text.Json;
 
 namespace Huobi.SDK.Core.Client
 {
@@ -28,7 +29,7 @@ namespace Huobi.SDK.Core.Client
         /// <param name="request">request</param>
         public void Request(RequestOrdersRequest request)
         {
-            _WebSocket.Send(request.ToJson());
+            _WebSocket.Send(JsonSerializerEx.Serialize(request));
 
             _logger.Log(LogLevel.Info, $"WebSocket requested, topic={request.topic}, accountId={request.AccountId} symbol={request.symbol}");
         }

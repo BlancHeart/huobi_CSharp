@@ -2,7 +2,6 @@
 using Huobi.SDK.Core.RequestBuilder;
 using Huobi.SDK.Model.Response.Order;
 using Huobi.SDK.Model.Request.Order;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 
@@ -40,7 +39,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/order/orders/place");
 
-            return await _httpRequestClient.PostAsync<PlaceOrderResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<PlaceOrderResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>
@@ -52,7 +51,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, "/v1/order/batch-orders");
 
-            return await _httpRequestClient.PostAsync<PlaceOrdersResponse>(url, JsonConvert.SerializeObject(requests));
+            return await _httpRequestClient.PostAsync<PlaceOrdersResponse>(url, JsonSerializerEx.Serialize(requests));
         }
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v1/order/orders/batchCancelOpenOrders");
 
-            return await _httpRequestClient.PostAsync<CancelOrdersByCriteriaResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CancelOrdersByCriteriaResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>
@@ -114,7 +113,7 @@ namespace Huobi.SDK.Core.Client
         {
             string url = _urlBuilder.Build(POST_METHOD, $"/v1/order/orders/batchcancel");
 
-            return await _httpRequestClient.PostAsync<CancelOrdersByIdsResponse>(url, request.ToJson());
+            return await _httpRequestClient.PostAsync<CancelOrdersByIdsResponse>(url, JsonSerializerEx.Serialize(request));
         }
 
         /// <summary>
